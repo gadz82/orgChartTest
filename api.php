@@ -1,8 +1,11 @@
 <?php
 require 'config.php';
 spl_autoload_register();
+use \App\Controller\NodeTreeController as NodeTreeController;
+use \App\Library\Request as Request;
 
-$nodeTree = new \App\Entity\NodeTrees();
+$controller = (new NodeTreeController(new Request()))->getNodeTree();
+$controller->handle();
 
-$nodeTree->setIdNode(1);
+
 
