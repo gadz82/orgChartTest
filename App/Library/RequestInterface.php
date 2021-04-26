@@ -13,4 +13,5 @@ interface RequestInterface {
 
     public function getParam(string $paramName) : ?string;
 
+
 }

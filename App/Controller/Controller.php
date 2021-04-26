@@ -1,8 +1,9 @@
 <?php
 namespace App\Controller;
 
+use App\Library\Request;
 use App\Library\RequestInterface;
-use App\Library\Response;
+use App\Library\JsonResponse;
 use App\Library\ResponseInterface;
 
 abstract class Controller{
@@ -14,13 +15,13 @@ abstract class Controller{
 
     protected ResponseInterface $response;
 
-    public function __construct(RequestInterface $request)
+    public function __construct()
     {
-        $this->request = $request;
-        $this->response = new Response();
+        $this->request = new Request();
+        $this->response = new JsonResponse();
     }
 
-    public function handle() : Response
+    public function handle() : JsonResponse
     {
         return $this->response;
     }

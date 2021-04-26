@@ -5,7 +5,7 @@ namespace App\Library;
  * Class Request - Basic Request Wrapper
  * @package App\Library
  */
-class Response implements ResponseInterface {
+class JsonResponse implements ResponseInterface {
 
     /**
      * @var int
@@ -66,9 +66,8 @@ class Response implements ResponseInterface {
      */
     public function sendResponse(callable $transformation = null): bool
     {
-        if(!is_null($transformation)) {
-            $this->content = call_user_func($transformation, $this->content);
-        }
+        $content = is_null($transformation) ? json_encode($this->content) : call_user_func($transformation, $this->content);
+
         foreach($this->headers as $key => $value) {
             header($key .': ' . $value);
         }
