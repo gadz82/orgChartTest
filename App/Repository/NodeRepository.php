@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\NodeTrees;
@@ -8,7 +9,19 @@ use App\Repository\CQRS\RepositoryInterface;
 use App\Repository\CQRS\RepositoryReaderInterface;
 use mysqli;
 
-class NodesRepository implements RepositoryInterface, RepositoryReaderInterface , NodesRepositoryReaderInterface {
+class NodesRepository implements RepositoryInterface, RepositoryReaderInterface, NodesRepositoryReaderInterface
+{
+
+    public static function getLanguageEnumValues()
+    {
+        /**
+         * @var mysqli $db
+         */
+        $db = Db::getInstance();
+        $type = $db->query("SHOW COLUMNS FROM node_tree_names WHERE language = 'language'")->fetch_object()->Type;
+        preg_match("/^enum\('(.*)'\)$/", $type, $matches);
+        return explode("','", $matches[1]);
+    }
 
     /**
      * @param int $idNode
@@ -64,20 +77,20 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface 
         $bindParams[] = $idNode;
         $bindParams[] = $language;
 
-        if(!is_null($searchKeyword)){
-            $sqlStatement.= "
+        if (!is_null($searchKeyword)) {
+            $sqlStatement .= "
                 AND ntm.nodeName LIKE ?;
             ";
-            $bindTypes.= 's';
+            $bindTypes .= 's';
             $bindParams = "%$searchKeyword%";
         }
 
-        $sqlStatement.= "
+        $sqlStatement .= "
             LIMIT ?, OFFSET ?
         ";
-        $offset = $pageNum*$pageSize;
+        $offset = $pageNum * $pageSize;
 
-        $bindTypes.= 'ii';
+        $bindTypes .= 'ii';
         $bindParams[] = $pageSize;
         $bindParams[] = $offset;
 
@@ -85,16 +98,6 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface 
         $stmt->bind_param($bindTypes, $bindParams);
 
 
-    }
-
-    public static function getLanguageEnumValues(){
-        /**
-         * @var mysqli $db
-         */
-        $db = Db::getInstance();
-        $type = $db->query( "SHOW COLUMNS FROM node_tree_names WHERE language = 'language'" )->fetch_object()->Type;
-        preg_match("/^enum\('(.*)'\)$/", $type, $matches);
-        return explode("','", $matches[1]);
     }
 
 }

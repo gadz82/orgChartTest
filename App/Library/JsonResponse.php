@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Library;
 
 /**
  * Class Request - Basic Request Wrapper
  * @package App\Library
  */
-class JsonResponse implements ResponseInterface {
+class JsonResponse implements ResponseInterface
+{
 
     /**
      * @var int
@@ -68,8 +70,8 @@ class JsonResponse implements ResponseInterface {
     {
         $content = is_null($transformation) ? json_encode($this->content) : call_user_func($transformation, $this->content);
 
-        foreach($this->headers as $key => $value) {
-            header($key .': ' . $value);
+        foreach ($this->headers as $key => $value) {
+            header($key . ': ' . $value);
         }
         http_response_code($this->statusCode);
 

@@ -2,7 +2,8 @@
 
 namespace App\Repository\CQRS;
 
-interface NodesRepositoryReaderInterface{
+interface NodesRepositoryReaderInterface
+{
 
     /**
      * @param int $idNode

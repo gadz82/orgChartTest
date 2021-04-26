@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Exception;
 
-class EntityException extends \Exception{
+class EntityException extends \Exception
+{
 
     const notFound = 10;
 

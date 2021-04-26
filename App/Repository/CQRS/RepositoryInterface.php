@@ -2,7 +2,8 @@
 
 namespace App\Repository\CQRS;
 
-interface RepositoryInterface{
+interface RepositoryInterface
+{
 
 
 }

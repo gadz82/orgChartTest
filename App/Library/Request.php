@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Library;
 
 /**
  * Class Request - Basic Request Wrapper
  * @package App\Library
  */
-class Request implements RequestInterface {
+class Request implements RequestInterface
+{
 
     /**
      * @var string
@@ -33,7 +35,7 @@ class Request implements RequestInterface {
      * @param string $var
      * @return mixed|null
      */
-    public function __get(string $var) : ?string
+    public function __get(string $var): ?string
     {
         return $this->getParam($var);
     }
@@ -41,7 +43,7 @@ class Request implements RequestInterface {
     /**
      * @return string
      */
-    public function getRequestMethod() : string
+    public function getRequestMethod(): string
     {
         return $this->requestMethod;
     }
@@ -49,7 +51,7 @@ class Request implements RequestInterface {
     /**
      * @return null|array
      */
-    public function getParams() : ?array
+    public function getParams(): ?array
     {
         return $this->params;
     }
@@ -57,7 +59,7 @@ class Request implements RequestInterface {
     /**
      * @return null|string
      */
-    public function getPayload() : ?string
+    public function getPayload(): ?string
     {
         return $this->payload;
     }

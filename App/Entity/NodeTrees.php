@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Entity;
 
 use App\Entity\Model\EntityInterface;
 use App\Entity\Model\NodeInterface;
 
-class NodeTrees  implements EntityInterface, NodeInterface {
+class NodeTrees implements EntityInterface, NodeInterface
+{
 
     /**
      * @var int
@@ -110,7 +112,6 @@ class NodeTrees  implements EntityInterface, NodeInterface {
     {
         $this->nodeTreeNames = $nodeTreeNames;
     }
-
 
 
 }

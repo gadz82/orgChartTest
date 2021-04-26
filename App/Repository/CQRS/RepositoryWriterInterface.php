@@ -2,4 +2,6 @@
 
 namespace App\Repository\CQRS;
 
-interface RepositoryWriterInterface{}
+interface RepositoryWriterInterface
+{
+}

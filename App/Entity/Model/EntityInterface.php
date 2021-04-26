@@ -2,6 +2,7 @@
 
 namespace App\Entity\Model;
 
-interface EntityInterface{
+interface EntityInterface
+{
 
 }

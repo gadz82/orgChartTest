@@ -1,12 +1,14 @@
 <?php
+
 namespace App\Library;
 
-class Db extends mysqli {
+class Db extends mysqli
+{
 
     /**
      * @var Db|null
      */
-    private static $instance = null ;
+    private static $instance = null;
 
     /**
      * Db constructor.
@@ -15,17 +17,19 @@ class Db extends mysqli {
      * @param $password
      * @param $database
      */
-    private function __construct($host, $user, $password, $database){
+    private function __construct($host, $user, $password, $database)
+    {
         parent::__construct($host, $user, $password, $database);
     }
 
     /**
      * @return Db
      */
-    public static function getInstance(){
-        if (self::$instance == null){
+    public static function getInstance()
+    {
+        if (self::$instance == null) {
             self::$instance = new self(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         }
-        return self::$instance ;
+        return self::$instance;
     }
 }

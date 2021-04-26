@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Entity;
 
-class NodeTreeNames implements EntityInterface{
+class NodeTreeNames implements EntityInterface
+{
 
     /**
      * @var int
