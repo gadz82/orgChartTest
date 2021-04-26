@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use App\Entity\NodeTrees;
 use App\Library\Db;
 use App\Repository\CQRS\NodesRepositoryReaderInterface;
 use App\Repository\CQRS\RepositoryInterface;
@@ -24,7 +25,7 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface 
          */
         $db = Db::getInstance();
         $sqlStatement = "
-            SELECT SELECT FOUND_ROWS()
+            SELECT
               n.idNode,
               n.`level`,
               n.iLeft,
@@ -57,6 +58,7 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface 
               np.idNode = ?
             AND
               ntm.`language` = ?";
+
 
         $bindTypes = 'is';
         $bindParams[] = $idNode;
@@ -91,7 +93,7 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface 
          */
         $db = Db::getInstance();
         $type = $db->query( "SHOW COLUMNS FROM node_tree_names WHERE language = 'language'" )->fetch_object()->Type;
-        preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
+        preg_match("/^enum\('(.*)'\)$/", $type, $matches);
         return explode("','", $matches[1]);
     }
 
