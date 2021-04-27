@@ -13,9 +13,12 @@ abstract class Controller
     /**
      * @var RequestInterface
      */
-    protected RequestInterface $request;
+    protected $request;
 
-    protected ResponseInterface $response;
+    /**
+     * @var ResponseInterface|JsonResponse
+     */
+    protected $response;
 
     public function __construct()
     {
@@ -23,9 +26,9 @@ abstract class Controller
         $this->response = new JsonResponse();
     }
 
-    public function handle(): JsonResponse
+    public function handle(): void
     {
-        return $this->response;
+        $this->response->sendResponse();
     }
 
 }

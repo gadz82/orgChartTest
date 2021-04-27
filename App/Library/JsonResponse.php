@@ -12,12 +12,12 @@ class JsonResponse implements ResponseInterface
     /**
      * @var int
      */
-    private integer $statusCode;
+    private $statusCode;
 
     /**
      * @var array
      */
-    private array $headers;
+    private $headers;
 
     /**
      * @var mixed
@@ -38,11 +38,27 @@ class JsonResponse implements ResponseInterface
     }
 
     /**
-     * @param integer $statusCode
+     * @param $content
      */
-    public function setStatusCode(integer $statusCode): void
+    public function setContent($content): void
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @param int $statusCode
+     */
+    public function setStatusCode(int $statusCode): void
     {
         $this->statusCode = $statusCode;
+    }
+
+    /**
+     * @param array $headers
+     */
+    public function setHeaders(array $headers = []): void
+    {
+        $this->headers = $headers;
     }
 
     /**
@@ -55,35 +71,20 @@ class JsonResponse implements ResponseInterface
     }
 
     /**
-     * @param array $headers
-     */
-    public function setHeaders(array $headers = []): void
-    {
-        $this->headers = $headers;
-    }
-
-    /**
      * @param callable|string $transformation
      * @return bool
      */
     public function sendResponse(callable $transformation = null): bool
     {
-        $content = is_null($transformation) ? json_encode($this->content) : call_user_func($transformation, $this->content);
+        $content = is_null($transformation) ? json_encode($this->content, JSON_PRETTY_PRINT) : call_user_func($transformation, $this->content);
 
+        header('Status: ' . $this->statusCode);
+        header('Content-Type: application/json');
         foreach ($this->headers as $key => $value) {
             header($key . ': ' . $value);
         }
-        http_response_code($this->statusCode);
 
-        echo $this->content;
+        echo $content;
         return true;
-    }
-
-    /**
-     * @param $content
-     */
-    public function setContent($content): void
-    {
-        $this->content = $content;
     }
 }

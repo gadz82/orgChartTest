@@ -34,6 +34,11 @@ class NodeTrees implements EntityInterface, NodeInterface
     private $nodeTreeNames;
 
     /**
+     * @var
+     */
+    private $childCount;
+
+    /**
      * @return int
      */
     public function getIdNode(): int
@@ -44,9 +49,10 @@ class NodeTrees implements EntityInterface, NodeInterface
     /**
      * @param int $idNode
      */
-    public function setIdNode(int $idNode)
+    public function setIdNode(int $idNode): NodeTrees
     {
         $this->idNode = $idNode;
+        return $this;
     }
 
     /**
@@ -60,9 +66,10 @@ class NodeTrees implements EntityInterface, NodeInterface
     /**
      * @param int $level
      */
-    public function setLevel(int $level)
+    public function setLevel(int $level): NodeTrees
     {
         $this->level = $level;
+        return $this;
     }
 
     /**
@@ -76,9 +83,10 @@ class NodeTrees implements EntityInterface, NodeInterface
     /**
      * @param int $iLeft
      */
-    public function setILeft(int $iLeft)
+    public function setILeft(int $iLeft): NodeTrees
     {
         $this->iLeft = $iLeft;
+        return $this;
     }
 
     /**
@@ -92,9 +100,10 @@ class NodeTrees implements EntityInterface, NodeInterface
     /**
      * @param int $iRight
      */
-    public function setIRight(int $iRight)
+    public function setIRight(int $iRight): NodeTrees
     {
         $this->iRight = $iRight;
+        return $this;
     }
 
     /**
@@ -108,10 +117,27 @@ class NodeTrees implements EntityInterface, NodeInterface
     /**
      * @param NodeTreeNames[] $nodeTreeNames
      */
-    public function setNodeTreeNames(array $nodeTreeNames): void
+    public function setNodeTreeNames(array $nodeTreeNames): NodeTrees
     {
         $this->nodeTreeNames = $nodeTreeNames;
+        return $this;
     }
 
+    /**
+     * @return int
+     */
+    function getChildCount(): int
+    {
+        return $this->childCount;
+    }
 
+    /**
+     * @param int $childCount
+     * @return NodeInterface
+     */
+    function setChildCount(int $childCount): NodeInterface
+    {
+        $this->childCount = $childCount;
+        return $this;
+    }
 }

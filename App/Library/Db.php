@@ -2,7 +2,7 @@
 
 namespace App\Library;
 
-class Db extends mysqli
+class Db extends \mysqli
 {
 
     /**
@@ -20,6 +20,7 @@ class Db extends mysqli
     private function __construct($host, $user, $password, $database)
     {
         parent::__construct($host, $user, $password, $database);
+        $this->set_charset("utf8");
     }
 
     /**

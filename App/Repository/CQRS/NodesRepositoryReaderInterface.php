@@ -13,6 +13,6 @@ interface NodesRepositoryReaderInterface
      * @param int $pageSize
      * @return NodeTrees[]
      */
-    public function getNodes(int $idNode, string $language, ?string $searchKeyword, int $pageNum = 0, int $pageSize = 100): array;
+    public function getNodes(int $idNode, string $language, int $pageNum, int $pageSize, ?string $searchKeyword = null): array;
 
 }

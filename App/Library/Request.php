@@ -41,6 +41,24 @@ class Request implements RequestInterface
     }
 
     /**
+     * @param string $paramName
+     * @return string|null
+     */
+    public function getParam(string $paramName): ?string
+    {
+        return $this->hasParam($paramName) ? $this->params[$paramName] : null;
+    }
+
+    /**
+     * @param string $paramName
+     * @return bool
+     */
+    public function hasParam(string $paramName): bool
+    {
+        return isset($this->params[$paramName]) && !empty($this->params[$paramName]);
+    }
+
+    /**
      * @return string
      */
     public function getRequestMethod(): string
@@ -73,21 +91,8 @@ class Request implements RequestInterface
         return $this->requestMethod == strtoupper($requestMethod);
     }
 
-    /**
-     * @param string $paramName
-     * @return bool
-     */
-    public function hasParam(string $paramName): bool
+    public function hasParams(array $params): bool
     {
-        return isset($this->params[$paramName]);
-    }
-
-    /**
-     * @param string $paramName
-     * @return string|null
-     */
-    public function getParam(string $paramName): ?string
-    {
-        return isset($this->params[$paramName]) ? $this->params[$paramName] : null;
+        return !array_diff($params, $this->params);
     }
 }

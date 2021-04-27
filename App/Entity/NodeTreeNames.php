@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Model\EntityInterface;
+
 class NodeTreeNames implements EntityInterface
 {
 
@@ -36,9 +38,10 @@ class NodeTreeNames implements EntityInterface
     /**
      * @param int $idNode
      */
-    public function setIdNode(int $idNode)
+    public function setIdNode(int $idNode): NodeTreeNames
     {
         $this->idNode = $idNode;
+        return $this;
     }
 
     /**
@@ -52,9 +55,10 @@ class NodeTreeNames implements EntityInterface
     /**
      * @param string $language
      */
-    public function setLanguage(string $language): void
+    public function setLanguage(string $language): NodeTreeNames
     {
         $this->language = $language;
+        return $this;
     }
 
     /**
@@ -68,9 +72,10 @@ class NodeTreeNames implements EntityInterface
     /**
      * @param string $nodeName
      */
-    public function setNodeName(string $nodeName): void
+    public function setNodeName(string $nodeName): NodeTreeNames
     {
         $this->nodeName = $nodeName;
+        return $this;
     }
 
     /**
@@ -84,9 +89,10 @@ class NodeTreeNames implements EntityInterface
     /**
      * @param NodeTrees[] $nodeTrees
      */
-    public function setNodeTrees(array $nodeTrees): void
+    public function setNodeTrees(array $nodeTrees): NodeTreeNames
     {
         $this->nodeTrees = $nodeTrees;
+        return $this;
     }
 
 }

@@ -2,14 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\NodeTreeNames;
 use App\Entity\NodeTrees;
 use App\Library\Db;
 use App\Repository\CQRS\NodesRepositoryReaderInterface;
-use App\Repository\CQRS\RepositoryInterface;
-use App\Repository\CQRS\RepositoryReaderInterface;
 use mysqli;
 
-class NodesRepository implements RepositoryInterface, RepositoryReaderInterface, NodesRepositoryReaderInterface
+class NodesRepository implements NodesRepositoryReaderInterface
 {
 
     public static function getLanguageEnumValues()
@@ -18,7 +17,7 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface,
          * @var mysqli $db
          */
         $db = Db::getInstance();
-        $type = $db->query("SHOW COLUMNS FROM node_tree_names WHERE language = 'language'")->fetch_object()->Type;
+        $type = $db->query("SHOW COLUMNS FROM node_tree_names WHERE Field = 'language'")->fetch_object()->Type;
         preg_match("/^enum\('(.*)'\)$/", $type, $matches);
         return explode("','", $matches[1]);
     }
@@ -31,7 +30,7 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface,
      * @param int|null $pageSize
      * @return NodeTrees[]
      */
-    public function getNodes(int $idNode, string $language, ?string $searchKeyword, ?int $pageNum = 0, ?int $pageSize = 100): array
+    public function getNodes(int $idNode, string $language, int $pageNum, int $pageSize, ?string $searchKeyword = null): array
     {
         /**
          * @var mysqli $db
@@ -58,8 +57,7 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface,
               ntm.language,
               ntm.`nodeName`
             FROM
-              node_tree as np,
-              node_tree as n
+              node_tree as np, node_tree as n
             INNER JOIN node_tree_names ntm ON ntm.`idNode` = n.`idNode`
             WHERE
               n.level = np.level + 1
@@ -78,25 +76,50 @@ class NodesRepository implements RepositoryInterface, RepositoryReaderInterface,
         $bindParams[] = $language;
 
         if (!is_null($searchKeyword)) {
+
             $sqlStatement .= "
-                AND ntm.nodeName LIKE ?;
+                AND ntm.nodeName COLLATE UTF8_GENERAL_CI LIKE ?
             ";
+
             $bindTypes .= 's';
-            $bindParams = "%$searchKeyword%";
+            $bindParams[] = "%" . $searchKeyword . "%";
+
         }
 
         $sqlStatement .= "
-            LIMIT ?, OFFSET ?
+            LIMIT ? OFFSET ?
         ";
-        $offset = $pageNum * $pageSize;
+        $offset = $pageNum > 0 ? $pageNum * $pageSize : 0;
 
-        $bindTypes .= 'ii';
+        $bindTypes .= "ii";
         $bindParams[] = $pageSize;
         $bindParams[] = $offset;
-
         $stmt = $db->prepare($sqlStatement);
-        $stmt->bind_param($bindTypes, $bindParams);
 
+        $stmt->bind_param($bindTypes, ...$bindParams);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $return = [];
+        while ($node = $result->fetch_object()) {
+            $nodeTree = new NodeTrees();
+            $nodeTree->setIdNode($node->idNode)
+                ->setILeft($node->iLeft)
+                ->setIRight($node->iRight)
+                ->setLevel($node->level)
+                ->setChildCount($node->childCount);
+
+            $nodeTreeName = new NodeTreeNames();
+            $nodeTreeName->setIdNode($node->idNode)
+                ->setLanguage($node->language)
+                ->setNodeName($node->nodeName);
+            $nodeTreeNames = [$nodeTreeName];
+
+            $nodeTree->setNodeTreeNames($nodeTreeNames);
+
+            $return[] = $nodeTree;
+        }
+
+        return $return;
 
     }
 
