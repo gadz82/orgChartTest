@@ -1,8 +1,6 @@
-CREATE
-DATABASE IF NOT EXISTS `organizational_chart` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `organizational_chart` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-USE
-`organizational_chart`;
+USE `organizational_chart`;
 
 CREATE TABLE `node_tree`
 (
