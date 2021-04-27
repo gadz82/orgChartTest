@@ -48,7 +48,7 @@ class NodesRepository implements NodesRepositoryReaderInterface
         $sqlStatement = "
             SELECT
               n.idNode,
-              n.`level`,
+              n.level,
               n.iLeft,
               n.iRight,
               (
@@ -64,10 +64,10 @@ class NodesRepository implements NodesRepositoryReaderInterface
                  nc.iRight < n.iRight
               ) AS childCount,
               ntm.language,
-              ntm.`nodeName`
+              ntm.nodeName
             FROM
               node_tree as np, node_tree as n
-            INNER JOIN node_tree_names ntm ON ntm.`idNode` = n.`idNode`
+            INNER JOIN node_tree_names ntm ON ntm.idNode = n.idNode
             WHERE
               n.level = np.level + 1
             AND
@@ -77,7 +77,7 @@ class NodesRepository implements NodesRepositoryReaderInterface
             AND
               np.idNode = ?
             AND
-              ntm.`language` = ?";
+              ntm.language = ?";
 
         /**
          * Avoid escape strings, using bind types
