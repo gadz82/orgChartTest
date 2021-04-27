@@ -16,7 +16,7 @@ spl_autoload_register(function ($className, $prefix = '') {
 });
 
 /**
- * Minimalistic and controller oriented boot Application
+ * Minimalistic and controller oriented boot of MVC Application
  */
 $controller = new NodeTreeController();
 $controller->getNodeTree();
