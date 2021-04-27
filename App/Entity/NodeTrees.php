@@ -5,6 +5,10 @@ namespace App\Entity;
 use App\Entity\Model\EntityInterface;
 use App\Entity\Model\NodeInterface;
 
+/**
+ * Class NodeTrees
+ * @package App\Entity
+ */
 class NodeTrees implements EntityInterface, NodeInterface
 {
 
