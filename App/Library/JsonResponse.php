@@ -3,7 +3,7 @@
 namespace App\Library;
 
 /**
- * Class Request - Basic Request Wrapper
+ * Class Request - Basic Request Wrapper for JSON responses
  * @package App\Library
  */
 class JsonResponse implements ResponseInterface

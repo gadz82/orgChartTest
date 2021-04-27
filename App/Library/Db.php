@@ -2,6 +2,10 @@
 
 namespace App\Library;
 
+/**
+ * Class Db
+ * @package App\Library
+ */
 class Db extends \mysqli
 {
 
@@ -24,6 +28,7 @@ class Db extends \mysqli
     }
 
     /**
+     * Singleton instance of mysqli connection
      * @return Db
      */
     public static function getInstance()

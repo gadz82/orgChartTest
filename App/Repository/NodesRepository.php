@@ -5,12 +5,19 @@ namespace App\Repository;
 use App\Entity\NodeTreeNames;
 use App\Entity\NodeTrees;
 use App\Library\Db;
-use App\Repository\NodesRepositoryReaderInterface;
 use mysqli;
 
+/**
+ * Class NodesRepository - Handle reading operations on Entities
+ * @package App\Repository
+ */
 class NodesRepository implements NodesRepositoryReaderInterface
 {
 
+    /**
+     * Collect defined enum variables from column "language"
+     * @return false|string[]
+     */
     public static function getLanguageEnumValues()
     {
         /**
@@ -23,6 +30,8 @@ class NodesRepository implements NodesRepositoryReaderInterface
     }
 
     /**
+     * Retrieve nodes using filtering params.
+     * Materially realizes the business model.
      * @param int $idNode
      * @param string $language
      * @param string|null $searchKeyword
@@ -70,13 +79,16 @@ class NodesRepository implements NodesRepositoryReaderInterface
             AND
               ntm.`language` = ?";
 
-
+        /**
+         * Avoid escape strings, using bind types
+         */
         $bindTypes = 'is';
         $bindParams[] = $idNode;
         $bindParams[] = $language;
 
         if (!is_null($searchKeyword)) {
 
+            //Case insensitive like condition
             $sqlStatement .= "
                 AND ntm.nodeName COLLATE UTF8_GENERAL_CI LIKE ?
             ";
@@ -96,10 +108,17 @@ class NodesRepository implements NodesRepositoryReaderInterface
         $bindParams[] = $offset;
         $stmt = $db->prepare($sqlStatement);
 
+        /**
+         * Assign dynamically populated array of params via splat operator
+         */
         $stmt->bind_param($bindTypes, ...$bindParams);
         $stmt->execute();
         $result = $stmt->get_result();
+
         $return = [];
+        /**
+         * Loop through results and mapping them to Entities
+         */
         while ($node = $result->fetch_object()) {
             $nodeTree = new NodeTrees();
             $nodeTree->setIdNode($node->idNode)

@@ -37,7 +37,7 @@ abstract class Controller
     /**
      * Handle final Output
      */
-    final public function handle(): void
+    public function handle(): void
     {
         $this->response->sendResponse();
     }

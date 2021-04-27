@@ -2,6 +2,10 @@
 
 namespace App\Exception;
 
+/**
+ * Class BadRequestException
+ * @package App\Exception
+ */
 class BadRequestException extends \Exception implements RestApiExceptionCastable
 {
 

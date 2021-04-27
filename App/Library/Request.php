@@ -75,6 +75,7 @@ class Request implements RequestInterface
     }
 
     /**
+     * Get request payload
      * @return null|string
      */
     public function getPayload(): ?string
@@ -83,6 +84,7 @@ class Request implements RequestInterface
     }
 
     /**
+     * Check if a request is a specific request method
      * @param string $requestMethod
      * @return bool
      */
@@ -91,6 +93,11 @@ class Request implements RequestInterface
         return $this->requestMethod == strtoupper($requestMethod);
     }
 
+    /**
+     * Check an array of params
+     * @param array $params
+     * @return bool
+     */
     public function hasParams(array $params): bool
     {
         return !!array_diff($params, array_keys($this->params));

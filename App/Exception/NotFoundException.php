@@ -2,6 +2,10 @@
 
 namespace App\Exception;
 
+/**
+ * Class NotFoundException
+ * @package App\Exception
+ */
 class NotFoundException extends \Exception implements RestApiExceptionCastable
 {
 
