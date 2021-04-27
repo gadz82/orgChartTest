@@ -79,7 +79,7 @@ class JsonResponse implements ResponseInterface
         $content = is_null($transformation) ? json_encode($this->content, JSON_PRETTY_PRINT) : call_user_func($transformation, $this->content);
 
         header('Status: ' . $this->statusCode);
-        header('Content-Type: application/json');
+        header('Content-Type: application/json; charset=utf8');
         foreach ($this->headers as $key => $value) {
             header($key . ': ' . $value);
         }
