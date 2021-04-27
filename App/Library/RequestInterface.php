@@ -15,5 +15,6 @@ interface RequestInterface
 
     public function getParam(string $paramName): ?string;
 
+    public function hasParams(array $paramName): bool;
 
 }

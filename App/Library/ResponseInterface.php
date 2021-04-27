@@ -11,7 +11,7 @@ interface ResponseInterface
         array $headers = []
     );
 
-    public function setStatusCode(integer $statusCode): void;
+    public function setStatusCode(int $statusCode): void;
 
     public function setContent($content): void;
 
