@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\NodeTreeNames;
 use App\Entity\NodeTrees;
 use App\Library\Db;
-use App\Repository\CQRS\NodesRepositoryReaderInterface;
+use App\Repository\NodesRepositoryReaderInterface;
 use mysqli;
 
 class NodesRepository implements NodesRepositoryReaderInterface

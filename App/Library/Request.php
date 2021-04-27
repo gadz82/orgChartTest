@@ -93,6 +93,6 @@ class Request implements RequestInterface
 
     public function hasParams(array $params): bool
     {
-        return !array_diff($params, $this->params);
+        return !!array_diff($params, array_keys($this->params));
     }
 }

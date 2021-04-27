@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository\CQRS;
+namespace App\Repository;
 
 interface NodesRepositoryReaderInterface
 {
