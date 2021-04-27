@@ -114,6 +114,7 @@ class NodeTreeController extends Controller
             $this->response->setContent($responseBody);
 
         } catch (RestApiExceptionCastable $e) {
+
             /*
              * Using managed Exeception interface due to map Exceptions implementing RestApiExceptionCastable
              * to specific HTTP respunse status codes
