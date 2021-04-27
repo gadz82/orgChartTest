@@ -39,7 +39,7 @@ class NodeTreeController extends Controller
 
             if ($this->request->hasParam('search_keyword')) {
                 if (!is_string($this->request->getParam('search_keyword'))) throw new BadRequestException("Invalid Request Param 'search_keyword'");
-                $searchKeyword = $this->request->getParam('search_keyword');
+                $searchKeyword = urldecode($this->request->getParam('search_keyword'));
             }
 
             if ($this->request->hasParam('page_num')) {
